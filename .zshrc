@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-#echo loading ~/.zshrc ...
+#echo "$ZDOTDIR/.zshrc loading ..."
 
 ##### オプション設定 #####
 # 詳細は man zshoptions を参照
@@ -26,20 +26,17 @@ setopt RM_STAR_WAIT
 setopt PROMPT_SUBST
 
 ##### キーバインド #####
-
 bindkey -e
 bindkey '^I' complete-word
 bindkey '^P' history-beginning-search-backward
 bindkey '^N' history-beginning-search-forward
 
 ##### コマンド履歴 #####
-
-HISTFILE=~/.zhistory
+HISTFILE=$ZDOTDIR/.zhistory
 HISTSIZE=10000
 SAVEHIST=10000
 
 ##### プロンプト #####
-
 precmd() {
   precmd_prompt
   case "${TERM}" in
@@ -182,7 +179,6 @@ function lw() {
 }
 
 ##### 補完 #####
-
 autoload -U compinit
 compinit
 
@@ -193,10 +189,30 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 #zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 #autoload -U compdef
 
-##### ホスト毎の設定 #####
+##### Windows character encoding convert
+# msys2 の ~/.bashrc を参考に
+if [ "${OS}" = "Windows_NT" ]; then
+  function wincmd(){
+    CMD=$1
+    shift
+    $CMD $* 2>&1 | iconv -f cp932 -t utf-8
+  }
 
-if [ -e ~/.zsh/zshrc.$HOST ]; then
-  source ~/.zsh/zshrc.$HOST
+  alias ipconfig='wincmd ipconfig'
+  alias netstat='wincmd netstat'
+  alias netsh='wincmd netsh'
+  alias taskkill='wincmd taskkill'
+  alias cs="wincmd cscript.exe -NoLogo"
+  alias ws="wincmd wscript.exe -NoLogo"
+  alias java="wincmd java"
+  alias javac="wincmd javac -encoding UTF-8"
+
+  ### interactive commands
+  alias scala="winpty scala.bat"
+  alias sbt="winpty sbt.bat"
 fi
 
-#echo ~/.zshrc loaded.
+##### ホスト毎の設定 #####
+[ -e $ZDOTDIR/.zshrc.$HOST ] && source $ZDOTDIR/.zshrc.$HOST
+
+#echo "$ZDOTDIR/.zshrc loading completed."

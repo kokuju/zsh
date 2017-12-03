@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-#echo "loading $ZDOTDIR/zshenv ..."
+#echo "$ZDOTDIR/.zshenv loading ..."
 
 ######################################################################
 ##### 環境変数 SHELL を設定 (for msys2)                          #####
@@ -163,7 +163,11 @@ fi
 ######################################################################
 alias PathContract="awk -f $ZDOTDIR/PathContract.awk"
 PATH=`echo $PATH | PathContract`
-LD_LIBRARY_PATH=`echo $LD_LIBRARY_PATH | PathContract`
-PKG_CONFIG_PATH=`echo $PKG_CONFIG_PATH | PathContract`
-CLASSPATH=`echo $CLASSPATH | PathContract`
+[ -z "$LD_LIBRARY_PATH" ] || \
+  LD_LIBRARY_PATH=`echo $LD_LIBRARY_PATH | PathContract`
+[ -z "$PKG_CONFIG_PATH" ] || \
+  PKG_CONFIG_PATH=`echo $PKG_CONFIG_PATH | PathContract`
+#CLASSPATH=`echo $CLASSPATH | PathContract`
 unalias PathContract
+
+#echo "$ZDOTDIR/.zshenv loading completed."
