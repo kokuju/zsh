@@ -3,10 +3,14 @@
 #echo "$ZDOTDIR/.zshenv loading ..."
 
 ######################################################################
+##### 環境変数 ZDOTDIR を設定                                    #####
+######################################################################
+[ -z "$ZDOTDIR" ] && export ZDOTDIR=~/.zsh
+
+######################################################################
 ##### 環境変数 SHELL を設定 (for msys2)                          #####
 ######################################################################
 [ -z "$SHELL" -a -f /bin/zsh ] && export SHELL=/bin/zsh
-
 
 ######################################################################
 ##### オプション設定                                             #####
@@ -161,13 +165,15 @@ fi
 ######################################################################
 ##### PATHの整理                                                 #####
 ######################################################################
-alias PathContract="awk -f $ZDOTDIR/PathContract.awk"
-PATH=`echo $PATH | PathContract`
-[ -z "$LD_LIBRARY_PATH" ] || \
-  LD_LIBRARY_PATH=`echo $LD_LIBRARY_PATH | PathContract`
-[ -z "$PKG_CONFIG_PATH" ] || \
-  PKG_CONFIG_PATH=`echo $PKG_CONFIG_PATH | PathContract`
-#CLASSPATH=`echo $CLASSPATH | PathContract`
-unalias PathContract
+if [ -f ~/$ZDOTDIR/PathContract.awk ]; then
+  alias PathContract="awk -f $ZDOTDIR/PathContract.awk"
+  PATH=`echo $PATH | PathContract`
+  [ -z "$LD_LIBRARY_PATH" ] || \
+    LD_LIBRARY_PATH=`echo $LD_LIBRARY_PATH | PathContract`
+  [ -z "$PKG_CONFIG_PATH" ] || \
+    PKG_CONFIG_PATH=`echo $PKG_CONFIG_PATH | PathContract`
+  #CLASSPATH=`echo $CLASSPATH | PathContract`
+  unalias PathContract
+fi
 
 #echo "$ZDOTDIR/.zshenv loading completed."
