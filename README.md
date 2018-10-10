@@ -3,6 +3,7 @@
 ## Install
 
 以下を ~/.bash_profile に追加する
+
     # 環境変数 SHELL を変更
     if [ -z "$X_NOZSH" ]; then
       if [ -x /usr/bin/zsh ]; then
@@ -26,6 +27,7 @@
     fi
 
 以下を ~/.bashrc に追加する
+
     # インタラクティブシェルの場合は exec $SHELL を実行
     # ログインシェルの場合は -l オプションを追加
     if [ `basename $SHELL` == zsh ]; then
