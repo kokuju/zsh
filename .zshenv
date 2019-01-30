@@ -160,7 +160,15 @@ fi
 ######################################################################
 ##### ホスト毎の設定                                             #####
 ######################################################################
-[ -f $ZDOTDIR/.zshenv.$HOST ] && source $ZDOTDIR/.zshenv.$HOST
+if [ -f ~/.zshenv.$HOST ]; then
+  source ~/.zshenv.$HOST
+elif [ -f ~/.zshenv.local ]; then
+  source ~/.zshenv.local
+elif [ -f $ZDOTDIR/.zshenv.$HOST ]; then
+  source $ZDOTDIR/.zshenv.$HOST
+elif [ -f $ZDOTDIR/.zshenv.local ]; then
+  source $ZDOTDIR/.zshenv.local
+fi
 
 ######################################################################
 ##### PATHの整理                                                 #####
