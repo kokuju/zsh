@@ -1,3 +1,5 @@
 *~
 .zhistory
 .zcompdump
+.zshrc.local
+.zshenv.local

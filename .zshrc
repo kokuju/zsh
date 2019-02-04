@@ -213,6 +213,14 @@ if [ "${OS}" = "Windows_NT" ]; then
 fi
 
 ##### ホスト毎の設定 #####
-[ -e $ZDOTDIR/.zshrc.$HOST ] && source $ZDOTDIR/.zshrc.$HOST
+if [ -f ~/.zshrc.$HOST ]; then
+  source ~/.zshrc.$HOST
+elif [ -f ~/.zshrc.local ]; then
+  source ~/.zshrc.local
+elif [ -f $ZDOTDIR/.zshrc.$HOST ]; then
+  source $ZDOTDIR/.zshrc.$HOST
+elif [ -f $ZDOTDIR/.zshrc.local ]; then
+  source $ZDOTDIR/.zshrc.local
+fi
 
 #echo "$ZDOTDIR/.zshrc loading completed."

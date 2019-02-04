@@ -112,51 +112,6 @@ setopt EXTENDED_GLOB
 # ドライブレター (C:) をMSYS表記 (/c) に置き換え
 JAVA_HOME=${${JAVA_HOME//\\//}/C://c}
 
-##### jenv
-if [ -d "$HOME/.jenv" ]; then
-  export PATH=$HOME/.jenv/shims:$PATH
-  source $HOME/.jenv/libexec/../completions/jenv.zsh
-  jenv rehash 2>/dev/null
-  export JENV_LOADED=1
-  unset JAVA_HOME
-  jenv() {
-    typeset command
-    command="$1"
-    if [ "$#" -gt 0 ]; then
-      shift
-    fi
-
-    case "$command" in
-      enable-plugin|rehash|shell|shell-options)
-        eval `jenv "sh-$command" "$@"`;;
-      *)
-        command jenv "$command" "$@";;
-    esac
-  }
-fi
-
-##### scalaenv
-if [ -d "$HOME/.scalaenv" ]; then
-  export PATH=$HOME/.scalaenv/shims:$PATH
-  export SCALAENV_SHELL=zsh
-  source $HOME/.scalaenv/libexec/../completions/scalaenv.zsh
-  command scalaenv rehash 2>/dev/null
-  scalaenv() {
-    local command
-    command="$1"
-    if [ "$#" -gt 0 ]; then
-      shift
-    fi
-
-    case "$command" in
-      rehash|shell)
-        eval "`scalaenv "sh-$command" "$@"`";;
-      * )
-        command scalaenv "$command" "$@";;
-    esac
-  }
-fi
-
 ######################################################################
 ##### ホスト毎の設定                                             #####
 ######################################################################
