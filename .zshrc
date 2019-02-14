@@ -124,7 +124,6 @@ alias procdistx='ruby ~/scripts/torque/ProcdistTorqueExclusive.rb'
 alias mid2mtx='ruby ~/scripts/mid2mtx.rb'
 alias mtx2mid='ruby ~/scripts/mtx2mid.rb'
 
-alias matlab='~/scripts/matlab.sh'
 alias jabref='java -jar ~/bib/JabRef-3.8.2.jar'
 alias jakld='rlwrap java -Xss1m -jar ~/lib/jakld_revised_20121228.jar'
 alias rmap='w3m /n/sd1/adm/rmap.html'
